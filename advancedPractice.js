@@ -24,29 +24,30 @@ var companySalesData = [
 
 function calculateSalesTax(sales, taxRates) {
   var obj = {};
-  for(var sales in companySalesData){
-    var totalRegionSales = 0;
-    var regionSales = companySalesData[sales].sales;
 
-    for(var i = 0; i < regionSales.length; i++){
+  for(var data in sales) {
+    var totalRegionSales = 0;
+    var regionSales = sales[data].sales;
+
+    for(var i = 0; i < regionSales.length; i++) {
       totalRegionSales += regionSales[i];
     }
-    var regionTax = totalRegionSales * taxRates[companySalesData[sales].province];
+    var regionTax = totalRegionSales * taxRates[sales[data].province];
 
-    if (!obj.hasOwnProperty(companySalesData[sales].name))  {
-      obj[companySalesData[sales].name] = {};
-      obj[companySalesData[sales].name]["totalSales"] = totalRegionSales;
-      obj[companySalesData[sales].name]["totalTaxes"] = regionTax;
+    if (!obj.hasOwnProperty(sales[data].name))  {
+      obj[sales[data].name] = {};
+      obj[sales[data].name]["totalSales"] = totalRegionSales;
+      obj[sales[data].name]["totalTaxes"] = regionTax;
     } else {
-      obj[companySalesData[sales].name]["totalSales"] += totalRegionSales;
-      obj[companySalesData[sales].name]["totalTaxes"] += regionTax;
+      obj[sales[data].name]["totalSales"] += totalRegionSales;
+      obj[sales[data].name]["totalTaxes"] += regionTax;
     }
   }
   return obj;
 }
 
 var results = calculateSalesTax(companySalesData, taxRates);
-
+console.log(results);
 /* Expected Results:
 {
   Telus: {
